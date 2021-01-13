@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C0B9D9925AE173A00DF2FD4 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B9D9725AE173A00DF2FD4 /* WeatherCell.swift */; };
-		0C0B9D9A25AE173A00DF2FD4 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0B9D9825AE173A00DF2FD4 /* WeatherCell.xib */; };
 		0C0B9DAC25AE1C9F00DF2FD4 /* UPCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B9DA925AE1C9F00DF2FD4 /* UPCarouselFlowLayout.swift */; };
+		0C0BE2AA25AF017F00CCBD8F /* CurrentWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BE2A925AF017F00CCBD8F /* CurrentWeatherService.swift */; };
+		0C0BE2AE25AF01AB00CCBD8F /* CurrentWeatherEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BE2AD25AF01AB00CCBD8F /* CurrentWeatherEntity.swift */; };
+		0C0BE2C225AF283400CCBD8F /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BE2C025AF283400CCBD8F /* WeatherCell.swift */; };
+		0C0BE2C325AF283400CCBD8F /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0BE2C125AF283400CCBD8F /* WeatherCell.xib */; };
 		0C5F413025ADCFE4003C3BB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F412F25ADCFE4003C3BB3 /* AppDelegate.swift */; };
 		0C5F413225ADCFE4003C3BB3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F413125ADCFE4003C3BB3 /* SceneDelegate.swift */; };
 		0C5F413425ADCFE4003C3BB3 /* CurrentDayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F413325ADCFE4003C3BB3 /* CurrentDayController.swift */; };
@@ -21,10 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0C0B9D9725AE173A00DF2FD4 /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
-		0C0B9D9825AE173A00DF2FD4 /* WeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		0C0B9DA925AE1C9F00DF2FD4 /* UPCarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPCarouselFlowLayout.swift; sourceTree = "<group>"; };
 		0C0B9DAA25AE1C9F00DF2FD4 /* UPCarouselFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPCarouselFlowLayout.h; sourceTree = "<group>"; };
+		0C0BE2A925AF017F00CCBD8F /* CurrentWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherService.swift; sourceTree = "<group>"; };
+		0C0BE2AD25AF01AB00CCBD8F /* CurrentWeatherEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherEntity.swift; sourceTree = "<group>"; };
+		0C0BE2C025AF283400CCBD8F /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
+		0C0BE2C125AF283400CCBD8F /* WeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		0C5F412C25ADCFE4003C3BB3 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C5F412F25ADCFE4003C3BB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C5F413125ADCFE4003C3BB3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,8 +63,8 @@
 		0C0B9D9625AE170D00DF2FD4 /* Collection View */ = {
 			isa = PBXGroup;
 			children = (
-				0C0B9D9725AE173A00DF2FD4 /* WeatherCell.swift */,
-				0C0B9D9825AE173A00DF2FD4 /* WeatherCell.xib */,
+				0C0BE2C025AF283400CCBD8F /* WeatherCell.swift */,
+				0C0BE2C125AF283400CCBD8F /* WeatherCell.xib */,
 			);
 			path = "Collection View";
 			sourceTree = "<group>";
@@ -72,6 +76,22 @@
 				0C0B9DAA25AE1C9F00DF2FD4 /* UPCarouselFlowLayout.h */,
 			);
 			path = UPCarouselFlowLayout;
+			sourceTree = "<group>";
+		};
+		0C0BE2A825AF014700CCBD8F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0C0BE2A925AF017F00CCBD8F /* CurrentWeatherService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		0C0BE2AC25AF018300CCBD8F /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				0C0BE2AD25AF01AB00CCBD8F /* CurrentWeatherEntity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		0C5F412325ADCFE4003C3BB3 = {
@@ -93,6 +113,8 @@
 		0C5F412E25ADCFE4003C3BB3 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				0C0BE2AC25AF018300CCBD8F /* Entity */,
+				0C0BE2A825AF014700CCBD8F /* Service */,
 				0C0B9DA825AE1C9F00DF2FD4 /* UPCarouselFlowLayout */,
 				0C0B9D9525AE170300DF2FD4 /* Cell */,
 				0C5F414825ADD4BC003C3BB3 /* Tab Bar */,
@@ -189,9 +211,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C0B9D9A25AE173A00DF2FD4 /* WeatherCell.xib in Resources */,
 				0C5F413C25ADCFE5003C3BB3 /* LaunchScreen.storyboard in Resources */,
 				0C5F413925ADCFE5003C3BB3 /* Assets.xcassets in Resources */,
+				0C0BE2C325AF283400CCBD8F /* WeatherCell.xib in Resources */,
 				0C5F413725ADCFE4003C3BB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,10 +227,12 @@
 			files = (
 				0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */,
 				0C5F413425ADCFE4003C3BB3 /* CurrentDayController.swift in Sources */,
-				0C0B9D9925AE173A00DF2FD4 /* WeatherCell.swift in Sources */,
+				0C0BE2AA25AF017F00CCBD8F /* CurrentWeatherService.swift in Sources */,
 				0C5F413025ADCFE4003C3BB3 /* AppDelegate.swift in Sources */,
 				0C5F414A25ADD4D6003C3BB3 /* TransparentNavBar.swift in Sources */,
+				0C0BE2C225AF283400CCBD8F /* WeatherCell.swift in Sources */,
 				0C5F413225ADCFE4003C3BB3 /* SceneDelegate.swift in Sources */,
+				0C0BE2AE25AF01AB00CCBD8F /* CurrentWeatherEntity.swift in Sources */,
 				0C0B9DAC25AE1C9F00DF2FD4 /* UPCarouselFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

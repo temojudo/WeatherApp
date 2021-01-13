@@ -15,7 +15,7 @@ class TransparentTabBar: UITabBarController {
         let appearece = UITabBarAppearance()
         appearece.configureWithTransparentBackground()
 
-        tabBar.standardAppearance   = appearece
+        tabBar.standardAppearance = appearece
     }
     
 }
