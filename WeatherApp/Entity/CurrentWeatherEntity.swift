@@ -13,6 +13,12 @@ struct CurrentWeatherResponse: Codable {
     let wind:    Wind
     let clouds:  Clouds
     let name:    String
+    let main:    Temperature
+    let sys:     System
+}
+
+struct System: Codable {
+    let country: String
 }
 
 struct Coordinate: Codable {
@@ -23,6 +29,11 @@ struct Coordinate: Codable {
 struct Weather: Codable {
     let main: String
     let icon: String
+}
+
+struct Temperature: Codable {
+    let temp: Double
+    let humidity: Double
 }
 
 struct Wind: Codable {

@@ -17,6 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="uv5-SF-VwV">
+                                <rect key="frame" x="187" y="428" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Dqs-Mr-ApM"/>
+                                    <constraint firstAttribute="width" constant="40" id="onT-wm-Xsa"/>
+                                </constraints>
+                                <color key="color" name="AccentColor"/>
+                            </activityIndicatorView>
                             <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="GeF-qz-9Fi">
                                 <rect key="frame" x="146" y="88" width="122.5" height="71"/>
                                 <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,12 +77,14 @@
                         <constraints>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.6" priority="750" id="5uk-JR-o1f"/>
                             <constraint firstItem="GeF-qz-9Fi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7cZ-TL-lif"/>
+                            <constraint firstItem="uv5-SF-VwV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9bH-tg-gdN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ffS-fH-qkx" secondAttribute="bottom" id="Ddb-cb-tul"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lmy-RE-VlI"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="NF8-1s-qqr"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" priority="750" constant="-12" id="dtS-gq-vF6"/>
                             <constraint firstItem="ffS-fH-qkx" firstAttribute="top" secondItem="CU5-Hp-6YJ" secondAttribute="bottom" constant="4" id="klA-2W-1cd"/>
                             <constraint firstItem="ffS-fH-qkx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="p2u-FF-DWc"/>
+                            <constraint firstItem="uv5-SF-VwV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pcx-Iu-K63"/>
                             <constraint firstItem="GeF-qz-9Fi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uUL-qn-hf5"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="top" secondItem="GeF-qz-9Fi" secondAttribute="bottom" constant="8" id="ySD-gk-vKS"/>
                         </constraints>
@@ -86,6 +96,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="CU5-Hp-6YJ" id="Yhp-Bu-l6r"/>
+                        <outlet property="loader" destination="uv5-SF-VwV" id="xLW-yL-yFT"/>
                         <outlet property="pageControl" destination="GeF-qz-9Fi" id="LYq-yc-iyI"/>
                     </connections>
                 </viewController>

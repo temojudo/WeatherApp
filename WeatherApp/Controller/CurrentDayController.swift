@@ -11,6 +11,7 @@ class CurrentDayController: UIViewController {
     
     @IBOutlet private var collectionView: UICollectionView!
     @IBOutlet private var pageControl:    UIPageControl!
+    @IBOutlet private var loader:         UIActivityIndicatorView!
 
     private let service     = CurrentWeatherService()
     private var weathers    = [CurrentWeatherResponse]()
@@ -20,6 +21,7 @@ class CurrentDayController: UIViewController {
         super.viewDidLoad()
         
 //        loadCurrentWeather()
+//        loader.startAnimating()
     }
 
     override func viewDidLayoutSubviews() {
@@ -41,17 +43,23 @@ class CurrentDayController: UIViewController {
         isLandscape = screenSize.height / screenSize.width < 1
     }
     
-    private func loadCurrentWeather() {
-        service.loadCurrentWeatherResponce(for: "tbilisi") { [weak self] result in
-            guard self != nil else { return }
-            DispatchQueue.main.async {
+    private func loadCurrentWeather(for city: String) {
+        collectionView.isHidden = true
+        loader.startAnimating()
+        service.loadCurrentWeatherResponce(for: city) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async() {
+                self.loader.stopAnimating()
                 switch result {
                     case .success(let weatherResponse):
-                        print(weatherResponse)
+                        self.weathers.insert(weatherResponse, at: self.pageControl.currentPage)
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData()
                         
                     case .failure(let error):
                         print(error)
                 }
+                self.collectionView.isHidden = false
             }
         }
     }
@@ -69,7 +77,11 @@ class CurrentDayController: UIViewController {
     }
     
     @IBAction func addCity() {
-        print("iaaaaa")
+        self.loadCurrentWeather(for: "rustavi")
+        self.loadCurrentWeather(for: "london")
+        self.loadCurrentWeather(for: "batumi")
+        self.loadCurrentWeather(for: "tbilisi")
+        self.loadCurrentWeather(for: "new york")
     }
 
 }
@@ -81,25 +93,28 @@ extension CurrentDayController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        pageControl.numberOfPages = 4
+        pageControl.numberOfPages = weathers.count
         pageControl.currentPage = 0
-        return pageControl.numberOfPages
+        return weathers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCell", for: indexPath)
         if let weatherCell = cell as? WeatherCell {
             weatherCell.setOrientation(isLandscapeModeOn: isLandscape)
+            weatherCell.setupCurrentWeatherView(weatherResponse: weathers[indexPath.row])
         }
         return cell
     }
-
+    
 }
 
-extension CurrentDayController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-       return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+extension CurrentDayController: UIScrollViewDelegate {
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let point = view.convert(collectionView.center, to: collectionView)
+        let indexPath = collectionView.indexPathForItem(at: point)
+        pageControl.currentPage = indexPath?.row ?? 0
     }
-
+    
 }
