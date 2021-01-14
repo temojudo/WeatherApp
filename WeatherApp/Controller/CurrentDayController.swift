@@ -117,7 +117,7 @@ extension CurrentDayController: UICollectionViewDataSource, UICollectionViewDele
 
 extension CurrentDayController: UIScrollViewDelegate {
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let point = view.convert(collectionView.center, to: collectionView)
         let indexPath = collectionView.indexPathForItem(at: point)
         pageControl.currentPage = indexPath?.row ?? 0
