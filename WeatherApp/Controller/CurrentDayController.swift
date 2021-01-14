@@ -17,6 +17,11 @@ class CurrentDayController: UIViewController {
     private var weathers    = [CurrentWeatherResponse]()
     private var isLandscape = UIDevice.current.orientation.isLandscape
     
+    private let weatherBackgroundColors: [UIColor] =
+        [UIColor(named: "blue-gradient-end")!,
+         UIColor(named: "green-gradient-end")!,
+         UIColor(named: "ochre-gradient-end")!]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -103,6 +108,7 @@ extension CurrentDayController: UICollectionViewDataSource, UICollectionViewDele
         if let weatherCell = cell as? WeatherCell {
             weatherCell.setOrientation(isLandscapeModeOn: isLandscape)
             weatherCell.setupCurrentWeatherView(weatherResponse: weathers[indexPath.row])
+            weatherCell.cellContentView.backgroundColor = weatherBackgroundColors[indexPath.row % weatherBackgroundColors.count]
         }
         return cell
     }
