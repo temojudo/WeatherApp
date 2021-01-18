@@ -20,6 +20,8 @@
 		0C5F413C25ADCFE5003C3BB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C5F413A25ADCFE5003C3BB3 /* LaunchScreen.storyboard */; };
 		0C5F414A25ADD4D6003C3BB3 /* TransparentNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F414925ADD4D6003C3BB3 /* TransparentNavBar.swift */; };
 		0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */; };
+		0CF35E6A25B5ABFC00922BA1 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF35E6925B5ABFC00922BA1 /* AlertController.swift */; };
+		0CF9E98C25B0DC0B00609371 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF9E98B25B0DC0B00609371 /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		0C5F413D25ADCFE5003C3BB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C5F414925ADD4D6003C3BB3 /* TransparentNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentNavBar.swift; sourceTree = "<group>"; };
 		0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentTabBar.swift; sourceTree = "<group>"; };
+		0CF35E6925B5ABFC00922BA1 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		0CF9E98B25B0DC0B00609371 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,7 @@
 		0C5F412E25ADCFE4003C3BB3 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				0CF9E98A25B0DBDE00609371 /* Extension */,
 				0C0BE2AC25AF018300CCBD8F /* Entity */,
 				0C0BE2A825AF014700CCBD8F /* Service */,
 				0C0B9DA825AE1C9F00DF2FD4 /* UPCarouselFlowLayout */,
@@ -134,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				0C5F413325ADCFE4003C3BB3 /* CurrentDayController.swift */,
+				0CF35E6925B5ABFC00922BA1 /* AlertController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -152,6 +158,14 @@
 				0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */,
 			);
 			path = "Tab Bar";
+			sourceTree = "<group>";
+		};
+		0CF9E98A25B0DBDE00609371 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0CF9E98B25B0DC0B00609371 /* UIImageView+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,9 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CF9E98C25B0DC0B00609371 /* UIImageView+Extension.swift in Sources */,
 				0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */,
 				0C5F413425ADCFE4003C3BB3 /* CurrentDayController.swift in Sources */,
 				0C0BE2AA25AF017F00CCBD8F /* CurrentWeatherService.swift in Sources */,
+				0CF35E6A25B5ABFC00922BA1 /* AlertController.swift in Sources */,
 				0C5F413025ADCFE4003C3BB3 /* AppDelegate.swift in Sources */,
 				0C5F414A25ADD4D6003C3BB3 /* TransparentNavBar.swift in Sources */,
 				0C0BE2C225AF283400CCBD8F /* WeatherCell.swift in Sources */,

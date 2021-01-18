@@ -9,13 +9,18 @@ import UIKit
 
 class CurrentDayController: UIViewController {
     
+    @IBOutlet private var contentView:    UIView!
     @IBOutlet private var collectionView: UICollectionView!
     @IBOutlet private var pageControl:    UIPageControl!
     @IBOutlet private var loader:         UIActivityIndicatorView!
+    @IBOutlet private var addButtonLoader: UIActivityIndicatorView!
+    @IBOutlet private var addButtonImageView: UIImageView!
 
     private let service     = CurrentWeatherService()
-    private var weathers    = [CurrentWeatherResponse]()
     private var isLandscape = UIDevice.current.orientation.isLandscape
+
+    private static let weatherKey = "weatherCities"
+    private static var weathers   = [CurrentWeatherResponse]()
     
     private let weatherBackgroundColors: [UIColor] =
         [UIColor(named: "blue-gradient-end")!,
@@ -25,15 +30,19 @@ class CurrentDayController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        loadCurrentWeather()
-//        loader.startAnimating()
+        getInitOrientation()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        getInitOrientation()
         setupCollectionView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        refresh()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -57,7 +66,7 @@ class CurrentDayController: UIViewController {
                 self.loader.stopAnimating()
                 switch result {
                     case .success(let weatherResponse):
-                        self.weathers.insert(weatherResponse, at: self.pageControl.currentPage)
+                        Self.weathers.insert(weatherResponse, at: 0)
                         self.collectionView.isHidden = false
                         self.collectionView.reloadData()
                         
@@ -81,12 +90,58 @@ class CurrentDayController: UIViewController {
         collectionView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellWithReuseIdentifier: "WeatherCell")
     }
     
+    @IBAction func refresh() {
+        Self.weathers.removeAll()
+        
+        let weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+        for city in weatherCities {
+            loadCurrentWeather(for: city)
+        }
+//
+//        self.loadCurrentWeather(for: "rustavi")
+//        self.loadCurrentWeather(for: "london")
+//        self.loadCurrentWeather(for: "batumi")
+//        self.loadCurrentWeather(for: "tbilisi")
+//        self.loadCurrentWeather(for: "new york")
+    }
+    
     @IBAction func addCity() {
-        self.loadCurrentWeather(for: "rustavi")
-        self.loadCurrentWeather(for: "london")
-        self.loadCurrentWeather(for: "batumi")
-        self.loadCurrentWeather(for: "tbilisi")
-        self.loadCurrentWeather(for: "new york")
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let alertController = mainStoryboard.instantiateViewController(withIdentifier: "AlertController") as? AlertController {
+            alertController.delegate = self
+            addButtonLoader.startAnimating()
+            addButtonImageView.isHidden = true
+            let backgroundImage = takeScreenshot()
+            DispatchQueue.global().sync {
+                let blurredBackgroundImage = self.addBlurTo(backgroundImage)
+                DispatchQueue.main.async {
+                    alertController.setBackgroundImage(image: blurredBackgroundImage)
+                    self.addButtonLoader.stopAnimating()
+                    self.addButtonImageView.isHidden = false
+                }
+            }
+            
+            alertController.modalPresentationStyle = .overFullScreen
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func addBlurTo(_ image: UIImage) -> UIImage? {
+        guard let ciImg = CIImage(image: image) else { return nil }
+        
+        let filteredImage = ciImg.applyingFilter("CIGaussianBlur")
+        return UIImage(ciImage: filteredImage)
+    }
+    
+    func takeScreenshot() -> UIImage {
+        if let layer = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.layer {
+            UIGraphicsBeginImageContext(layer.frame.size)
+            if let context = UIGraphicsGetCurrentContext() {
+                layer.render(in: context)
+            }
+        }
+        return UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
     }
 
 }
@@ -98,16 +153,15 @@ extension CurrentDayController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        pageControl.numberOfPages = weathers.count
-        pageControl.currentPage = 0
-        return weathers.count
+        pageControl.numberOfPages = Self.weathers.count
+        return Self.weathers.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCell", for: indexPath)
         if let weatherCell = cell as? WeatherCell {
             weatherCell.setOrientation(isLandscapeModeOn: isLandscape)
-            weatherCell.setupCurrentWeatherView(weatherResponse: weathers[indexPath.row])
+            weatherCell.setupCurrentWeatherView(weatherResponse: Self.weathers[indexPath.row])
             weatherCell.cellContentView.backgroundColor = weatherBackgroundColors[indexPath.row % weatherBackgroundColors.count]
         }
         return cell
@@ -121,6 +175,19 @@ extension CurrentDayController: UIScrollViewDelegate {
         let point = view.convert(collectionView.center, to: collectionView)
         let indexPath = collectionView.indexPathForItem(at: point)
         pageControl.currentPage = indexPath?.row ?? 0
+    }
+    
+}
+
+extension CurrentDayController: AddCityDelegate {
+    
+    func cityAddedSuccessfully(_ sender: AlertController, response: CurrentWeatherResponse) {
+        Self.weathers.insert(response, at: pageControl.currentPage)
+        collectionView.reloadData()
+        
+        var weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+        weatherCities.insert(response.name, at: pageControl.currentPage)
+        UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
     }
     
 }
