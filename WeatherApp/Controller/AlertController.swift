@@ -18,15 +18,25 @@ class AlertController: UIViewController {
     @IBOutlet private var submitButtonImageView: UIImageView!
     @IBOutlet private var textField:             UITextField!
     @IBOutlet private var addButtonLoader:       UIActivityIndicatorView!
+    @IBOutlet private var errorAlertView:        UIView!
     
     weak var delegate: AddCityDelegate?
     
     private let service = CurrentWeatherService()
     
+//    override var shouldAutorotate: Bool
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        popupView.layer.cornerRadius = 25
+        popupView.layer.cornerRadius      = 25
+        errorAlertView.layer.cornerRadius = 15
+        
+        errorAlertView.isHidden = true
+//        shouldAutorotate = false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -37,6 +47,7 @@ class AlertController: UIViewController {
     }
     
     func dismissViewController() {
+//        shouldAutorotate = true
         dismiss(animated: true, completion: nil)
     }
     
@@ -62,7 +73,8 @@ class AlertController: UIViewController {
 
                     case .failure(let error):
                         print(error)
-                        self.dismissViewController()
+                        self.errorAlertView.isHidden = false
+//                        self.dismissViewController()
                 }
             }
         }

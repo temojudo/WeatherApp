@@ -31,18 +31,14 @@ class CurrentDayController: UIViewController {
         super.viewDidLoad()
         
         getInitOrientation()
+        setupCollectionView()
+        refresh()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        setupCollectionView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        refresh()
+        setCollectionViewLayout()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -50,6 +46,10 @@ class CurrentDayController: UIViewController {
         
         isLandscape = UIDevice.current.orientation.isLandscape
         collectionView.reloadData()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: {
+            self.collectionView.scrollToItem(at: IndexPath(row: self.pageControl.currentPage, section: 0), at: .centeredHorizontally, animated: false)
+        })
     }
     
     func getInitOrientation() {
@@ -81,13 +81,15 @@ class CurrentDayController: UIViewController {
     func setupCollectionView() {
         collectionView.delegate   = self
         collectionView.dataSource = self
-        
+                
+        collectionView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellWithReuseIdentifier: "WeatherCell")
+    }
+    
+    func setCollectionViewLayout() {
         let layout = UPCarouselFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: collectionView.frame.width * 0.7, height: collectionView.frame.height)
         collectionView.collectionViewLayout = layout
-        
-        collectionView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellWithReuseIdentifier: "WeatherCell")
     }
     
     @IBAction func refresh() {
@@ -97,12 +99,6 @@ class CurrentDayController: UIViewController {
         for city in weatherCities {
             loadCurrentWeather(for: city)
         }
-//
-//        self.loadCurrentWeather(for: "rustavi")
-//        self.loadCurrentWeather(for: "london")
-//        self.loadCurrentWeather(for: "batumi")
-//        self.loadCurrentWeather(for: "tbilisi")
-//        self.loadCurrentWeather(for: "new york")
     }
     
     @IBAction func addCity() {
