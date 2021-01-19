@@ -9,15 +9,16 @@ import UIKit
 
 class CurrentDayController: UIViewController {
     
-    @IBOutlet private var contentView:    UIView!
-    @IBOutlet private var collectionView: UICollectionView!
-    @IBOutlet private var pageControl:    UIPageControl!
-    @IBOutlet private var loader:         UIActivityIndicatorView!
-    @IBOutlet private var addButtonLoader: UIActivityIndicatorView!
+    @IBOutlet private var contentView:        UIView!
+    @IBOutlet private var collectionView:     UICollectionView!
+    @IBOutlet private var pageControl:        UIPageControl!
+    @IBOutlet private var loader:             UIActivityIndicatorView!
+    @IBOutlet private var addButtonLoader:    UIActivityIndicatorView!
     @IBOutlet private var addButtonImageView: UIImageView!
 
-    private let service     = CurrentWeatherService()
-    private var isLandscape = UIDevice.current.orientation.isLandscape
+    private let service      = CurrentWeatherService()
+    private var isLandscape  = UIDevice.current.orientation.isLandscape
+    private var shouldRotate = false
 
     private static let weatherKey = "weatherCities"
     private static var weathers   = [CurrentWeatherResponse]()
@@ -26,6 +27,10 @@ class CurrentDayController: UIViewController {
         [UIColor(named: "blue-gradient-end")!,
          UIColor(named: "green-gradient-end")!,
          UIColor(named: "ochre-gradient-end")!]
+    
+    override var shouldAutorotate: Bool {
+        return shouldRotate
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +44,13 @@ class CurrentDayController: UIViewController {
         super.viewDidLayoutSubviews()
         
         setCollectionViewLayout()
+        shouldRotate = true
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        
+        guard shouldRotate else { return }
         
         isLandscape = UIDevice.current.orientation.isLandscape
         collectionView.reloadData()
@@ -50,6 +58,48 @@ class CurrentDayController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: {
             self.collectionView.scrollToItem(at: IndexPath(row: self.pageControl.currentPage, section: 0), at: .centeredHorizontally, animated: false)
         })
+    }
+    
+    private func setupLongGestureRecognizerOnCollection() {
+        let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
+        collectionView.addGestureRecognizer(longPressedGesture)
+    }
+    
+    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        let cell = gestureRecognizer.location(in: collectionView)
+
+        guard
+            let indexPath = collectionView.indexPathForItem(at: cell),
+            indexPath.row == pageControl.currentPage
+        else { return }
+        
+        let cityName = Self.weathers[pageControl.currentPage].name
+        let alert    = UIAlertController(title: "Delete Weather?", message: "\(cityName) will be deleted", preferredStyle: .alert)
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "Delete",
+                style: .destructive,
+                handler: { _ in
+                    Self.weathers.remove(at: self.pageControl.currentPage)
+                    self.collectionView.reloadData()
+                    
+                    var weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+                    weatherCities.remove(at: weatherCities.firstIndex(of: cityName)!)
+                    UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+                }
+            )
+        )
+
+        present(alert, animated: true, completion: nil)
     }
     
     func getInitOrientation() {
@@ -81,7 +131,9 @@ class CurrentDayController: UIViewController {
     func setupCollectionView() {
         collectionView.delegate   = self
         collectionView.dataSource = self
-                
+        
+        setupLongGestureRecognizerOnCollection()
+        
         collectionView.register(UINib(nibName: "WeatherCell", bundle: nil), forCellWithReuseIdentifier: "WeatherCell")
     }
     
@@ -121,6 +173,16 @@ class CurrentDayController: UIViewController {
             alertController.modalPresentationStyle = .overFullScreen
             present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func getIndexInWeathers(name: String) -> Int? {
+        for i in 0..<Self.weathers.count {
+            if name == Self.weathers[i].name {
+                return i
+            }
+        }
+        
+        return nil
     }
     
     func addBlurTo(_ image: UIImage) -> UIImage? {
@@ -171,19 +233,26 @@ extension CurrentDayController: UIScrollViewDelegate {
         let point = view.convert(collectionView.center, to: collectionView)
         let indexPath = collectionView.indexPathForItem(at: point)
         pageControl.currentPage = indexPath?.row ?? 0
+        
     }
-    
 }
 
 extension CurrentDayController: AddCityDelegate {
     
     func cityAddedSuccessfully(_ sender: AlertController, response: CurrentWeatherResponse) {
-        Self.weathers.insert(response, at: pageControl.currentPage)
-        collectionView.reloadData()
-        
         var weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
-        weatherCities.insert(response.name, at: pageControl.currentPage)
-        UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+        
+        if let index = getIndexInWeathers(name: response.name) {
+            pageControl.currentPage = index
+            self.collectionView.scrollToItem(at: IndexPath(row: self.pageControl.currentPage, section: 0), at: .centeredHorizontally, animated: false)
+        } else {
+            Self.weathers.insert(response, at: pageControl.currentPage)
+            collectionView.reloadData()
+            
+            weatherCities.insert(response.name, at: pageControl.currentPage)
+            UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+        }
+
     }
     
 }
