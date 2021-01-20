@@ -78,16 +78,75 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-q5-9FB">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="data_load_error" translatesAutoresizingMaskIntoConstraints="NO" id="GwH-nG-RqS">
+                                        <rect key="frame" x="157" y="272.5" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="bxk-yc-5AU"/>
+                                            <constraint firstAttribute="width" secondItem="GwH-nG-RqS" secondAttribute="height" multiplier="1:1" id="lPy-rV-Y9Z"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error occured while loading data" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvi-nj-bVZ">
+                                        <rect key="frame" x="0.0" y="380.5" width="414" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="tre-lf-I1K">
+                                        <rect key="frame" x="108" y="410" width="198" height="35"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RnQ-gt-3ig">
+                                                <rect key="frame" x="0.0" y="0.0" width="78" height="35"/>
+                                                <color key="backgroundColor" name="AccentColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <state key="normal" title="  Reload  ">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="refresh" destination="BYZ-38-t0r" eventType="touchUpInside" id="dHq-61-Dqr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OwN-8e-Ctj">
+                                                <rect key="frame" x="113" y="0.0" width="85" height="35"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <state key="normal" title="  Dismiss  ">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="dismissErrors" destination="BYZ-38-t0r" eventType="touchUpInside" id="C8a-3Q-K07"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="bg-gradient-end"/>
+                                <constraints>
+                                    <constraint firstItem="Dvi-nj-bVZ" firstAttribute="top" secondItem="GwH-nG-RqS" secondAttribute="bottom" constant="8" id="6XK-Bi-ILi"/>
+                                    <constraint firstItem="tre-lf-I1K" firstAttribute="centerX" secondItem="zwj-q5-9FB" secondAttribute="centerX" id="EfL-oX-hUX"/>
+                                    <constraint firstItem="tre-lf-I1K" firstAttribute="top" secondItem="Dvi-nj-bVZ" secondAttribute="bottom" constant="8" id="OFe-Mp-M4W"/>
+                                    <constraint firstItem="GwH-nG-RqS" firstAttribute="centerX" secondItem="zwj-q5-9FB" secondAttribute="centerX" id="ObP-sN-Tka"/>
+                                    <constraint firstItem="Dvi-nj-bVZ" firstAttribute="width" secondItem="zwj-q5-9FB" secondAttribute="width" id="eud-mY-rsi"/>
+                                    <constraint firstItem="Dvi-nj-bVZ" firstAttribute="centerX" secondItem="zwj-q5-9FB" secondAttribute="centerX" id="ogg-UA-Bl3"/>
+                                    <constraint firstItem="GwH-nG-RqS" firstAttribute="centerY" secondItem="zwj-q5-9FB" secondAttribute="centerY" constant="-40" id="wf2-6J-PH1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="bg-gradient-end"/>
                         <constraints>
+                            <constraint firstItem="zwj-q5-9FB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="5kY-qM-2n8"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.6" priority="750" id="5uk-JR-o1f"/>
                             <constraint firstItem="GeF-qz-9Fi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7cZ-TL-lif"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zwj-q5-9FB" secondAttribute="bottom" id="84X-uu-Ify"/>
                             <constraint firstItem="uv5-SF-VwV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9bH-tg-gdN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ffS-fH-qkx" secondAttribute="bottom" id="Ddb-cb-tul"/>
+                            <constraint firstItem="zwj-q5-9FB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FvN-NE-YqQ"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lmy-RE-VlI"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="NF8-1s-qqr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zwj-q5-9FB" secondAttribute="trailing" id="QUx-e2-FJu"/>
                             <constraint firstItem="CU5-Hp-6YJ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" priority="750" constant="-12" id="dtS-gq-vF6"/>
                             <constraint firstItem="ffS-fH-qkx" firstAttribute="top" secondItem="CU5-Hp-6YJ" secondAttribute="bottom" constant="4" id="klA-2W-1cd"/>
                             <constraint firstItem="ffS-fH-qkx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="p2u-FF-DWc"/>
@@ -109,8 +168,11 @@
                         <outlet property="addButtonLoader" destination="FIe-1I-2xO" id="D77-Q5-bhJ"/>
                         <outlet property="collectionView" destination="CU5-Hp-6YJ" id="Yhp-Bu-l6r"/>
                         <outlet property="contentView" destination="8bC-Xf-vdC" id="zi4-Pv-aFO"/>
+                        <outlet property="dismissButton" destination="OwN-8e-Ctj" id="wIm-22-rJH"/>
+                        <outlet property="errorPageView" destination="zwj-q5-9FB" id="au5-xC-s3H"/>
                         <outlet property="loader" destination="uv5-SF-VwV" id="xLW-yL-yFT"/>
                         <outlet property="pageControl" destination="GeF-qz-9Fi" id="LYq-yc-iyI"/>
+                        <outlet property="reloadButton" destination="RnQ-gt-3ig" id="K03-u9-qEE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -348,6 +410,7 @@
     </scenes>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
+        <image name="data_load_error" width="45" height="45"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="tab_forecast" width="25" height="25"/>
         <image name="tab_today" width="30" height="29"/>

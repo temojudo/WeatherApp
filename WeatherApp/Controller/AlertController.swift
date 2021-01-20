@@ -36,7 +36,7 @@ class AlertController: UIViewController {
         addKeyboardNotifications()
     }
     
-    func setupViews() {
+    private func setupViews() {
         popupView.layer.cornerRadius      = 25
         errorAlertView.layer.cornerRadius = 15
         
@@ -47,7 +47,7 @@ class AlertController: UIViewController {
         view.addSubview(contentView)
     }
     
-    func addKeyboardNotifications() {
+    private func addKeyboardNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleKeyboardShow(notification:)),
@@ -125,13 +125,12 @@ class AlertController: UIViewController {
                         self.delegate?.cityAddedSuccessfully(self, response: weatherResponse)
                         self.dismiss(animated: true, completion: nil)
 
-                    case .failure(let error):
-                        print(error)
+                    case .failure( _):
+                        self.textField.text = ""
                         self.errorAlertView.isHidden = false
                 }
             }
         }
-        
     }
     
 }

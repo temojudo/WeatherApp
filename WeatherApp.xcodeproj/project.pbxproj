@@ -22,6 +22,7 @@
 		0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */; };
 		0CF35E6A25B5ABFC00922BA1 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF35E6925B5ABFC00922BA1 /* AlertController.swift */; };
 		0CF9E98C25B0DC0B00609371 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF9E98B25B0DC0B00609371 /* UIImageView+Extension.swift */; };
+		0CFBF68225B844E600397229 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFBF68125B844E600397229 /* UIImage+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentTabBar.swift; sourceTree = "<group>"; };
 		0CF35E6925B5ABFC00922BA1 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		0CF9E98B25B0DC0B00609371 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		0CFBF68125B844E600397229 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				0CF9E98B25B0DC0B00609371 /* UIImageView+Extension.swift */,
+				0CFBF68125B844E600397229 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				0CF9E98C25B0DC0B00609371 /* UIImageView+Extension.swift in Sources */,
 				0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */,
 				0C5F413425ADCFE4003C3BB3 /* CurrentDayController.swift in Sources */,
+				0CFBF68225B844E600397229 /* UIImage+Extension.swift in Sources */,
 				0C0BE2AA25AF017F00CCBD8F /* CurrentWeatherService.swift in Sources */,
 				0CF35E6A25B5ABFC00922BA1 /* AlertController.swift in Sources */,
 				0C5F413025ADCFE4003C3BB3 /* AppDelegate.swift in Sources */,
