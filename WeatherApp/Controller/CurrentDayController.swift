@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class CurrentDayController: UIViewController {
     
@@ -19,6 +20,7 @@ class CurrentDayController: UIViewController {
     @IBOutlet private var reloadButton:       UIButton!
     @IBOutlet private var dismissButton:      UIButton!
     
+    private let locationManager    = CLLocationManager()
     private let service            = CurrentWeatherService()
     private var isLandscape        = UIDevice.current.orientation.isLandscape
     private var shouldRotate       = false
@@ -48,13 +50,27 @@ class CurrentDayController: UIViewController {
         dismissButton.layer.cornerRadius = 10
     }
     
+    private func getCurrentCoordinates() {
+        self.locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        forceLoadError()
+//        UserDefaults.standard.set([String](), forKey: Self.weatherKey)
+//        forceLoadError()
+        
         getInitOrientation()
         setupCollectionView()
         setupButtonsCornerRadius()
+        getCurrentCoordinates()
+        
         refresh()
     }
 
@@ -91,7 +107,7 @@ class CurrentDayController: UIViewController {
             indexPath.row == pageControl.currentPage
         else { return }
         
-        let cityName = Self.weathers[pageControl.currentPage].name
+        let cityName = Self.weathers[pageControl.currentPage].name + ", " + Self.weathers[pageControl.currentPage].sys.country
         let alert    = UIAlertController(title: "Delete Weather?", message: "\(cityName) will be deleted", preferredStyle: .alert)
         
         alert.addAction(
@@ -127,7 +143,7 @@ class CurrentDayController: UIViewController {
     
     private func loadCurrentWeather(for city: String) {
         group.enter()
-        service.loadCurrentWeatherResponce(for: city) { result in
+        service.loadCurrentWeatherResponce(city: city) { result in
             switch result {
                 case .success(let weatherResponse):
                     Self.weathers.append(weatherResponse)
@@ -276,12 +292,38 @@ extension CurrentDayController: AddCityDelegate {
             pageControl.currentPage = index
             self.collectionView.scrollToItem(at: IndexPath(row: self.pageControl.currentPage, section: 0), at: .centeredHorizontally, animated: false)
         } else {
-            Self.weathers.insert(response, at: pageControl.currentPage)
-            collectionView.reloadData()
+            Self.weathers.insert(response, at: self.pageControl.currentPage)
+            collectionView.isHidden = true
+            loader.startAnimating()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                self.collectionView.reloadData()
+                self.collectionView.isHidden = false
+                self.loader.stopAnimating()
+            })
             
-            weatherCities.insert(response.name, at: pageControl.currentPage)
+            weatherCities.insert(response.name + ", " + response.sys.country, at: pageControl.currentPage)
             UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
         }
+    }
+    
+}
+
+extension CurrentDayController: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let coordinate = manager.location?.coordinate else { return }
+        
+        service.loadCurrentWeatherResponce(lon: coordinate.longitude, lat: coordinate.latitude, completion: { result in
+            DispatchQueue.main.async {
+                switch result {
+                    case .success(let weatherResponse):
+                        self.cityAddedSuccessfully(AlertController(), response: weatherResponse)
+                        
+                    case .failure( _):
+                        break
+                }
+            }
+        })
     }
     
 }

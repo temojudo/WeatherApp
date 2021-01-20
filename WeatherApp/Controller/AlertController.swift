@@ -115,7 +115,7 @@ class AlertController: UIViewController {
         
         addButtonLoader.startAnimating()
         submitButtonImageView.isHidden = true
-        service.loadCurrentWeatherResponce(for: city) { [weak self] result in
+        service.loadCurrentWeatherResponce(city: city) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async() {
                 self.addButtonLoader.stopAnimating()
