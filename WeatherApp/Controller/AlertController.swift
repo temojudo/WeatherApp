@@ -23,7 +23,7 @@ class AlertController: UIViewController {
     
     weak var delegate: AddCityDelegate?
     
-    private let service = CurrentWeatherService()
+    private let service = WeatherService()
     
     override var shouldAutorotate: Bool {
         return false

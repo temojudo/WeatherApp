@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherEntity.swift
+//  WeatherEntity.swift
 //  WeatherApp
 //
 //  Created by KuRaMa on 1/13/21.
@@ -17,6 +17,22 @@ struct CurrentWeatherResponse: Codable {
     let sys:     System
 }
 
+struct ForecastWeatherResponse: Codable {
+    let list: [ForecastListItem]
+    let city: City
+}
+
+struct ForecastListItem: Codable {
+    let main:    Temperature
+    let weather: [Weather]
+    let dt_txt:  String
+}
+
+struct City: Codable {
+    let name:    String
+    let country: String
+}
+
 struct System: Codable {
     let country: String
 }
@@ -27,12 +43,13 @@ struct Coordinate: Codable {
 }
 
 struct Weather: Codable {
-    let main: String
-    let icon: String
+    let main:        String
+    let description: String
+    let icon:        String
 }
 
 struct Temperature: Codable {
-    let temp: Double
+    let temp:     Double
     let humidity: Double
 }
 

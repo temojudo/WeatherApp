@@ -332,18 +332,43 @@
         <!--Forecast-->
         <scene sceneID="OwJ-sX-sBl">
             <objects>
-                <viewController id="bQf-z1-d1D" sceneMemberID="viewController">
+                <viewController id="bQf-z1-d1D" customClass="ForecastController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eeV-S9-N2E">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WQm-5X-i8B">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="e3z-8N-faG">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                <color key="color" name="AccentColor"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="him-QR-iUs"/>
                         <color key="backgroundColor" name="bg-gradient-end"/>
+                        <constraints>
+                            <constraint firstItem="e3z-8N-faG" firstAttribute="centerY" secondItem="eeV-S9-N2E" secondAttribute="centerY" id="2s6-DW-jFo"/>
+                            <constraint firstItem="him-QR-iUs" firstAttribute="trailing" secondItem="WQm-5X-i8B" secondAttribute="trailing" id="5UE-Tk-ClH"/>
+                            <constraint firstItem="WQm-5X-i8B" firstAttribute="leading" secondItem="him-QR-iUs" secondAttribute="leading" id="8yd-uI-ERh"/>
+                            <constraint firstItem="WQm-5X-i8B" firstAttribute="top" secondItem="him-QR-iUs" secondAttribute="top" id="Njb-pr-McE"/>
+                            <constraint firstItem="e3z-8N-faG" firstAttribute="centerX" secondItem="eeV-S9-N2E" secondAttribute="centerX" id="OM7-Kc-yJI"/>
+                            <constraint firstItem="him-QR-iUs" firstAttribute="bottom" secondItem="WQm-5X-i8B" secondAttribute="bottom" id="xby-t4-KeE"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Forecast" id="WNq-MW-IaP">
                         <barButtonItem key="leftBarButtonItem" image="arrow.clockwise" catalog="system" id="G57-hN-CW4">
                             <color key="tintColor" name="AccentColor"/>
+                            <connections>
+                                <action selector="refresh" destination="bQf-z1-d1D" id="XN4-mG-pW9"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="loader" destination="e3z-8N-faG" id="t8t-9b-wJV"/>
+                        <outlet property="tableView" destination="WQm-5X-i8B" id="mcY-GF-iEE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4E-WG-797" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

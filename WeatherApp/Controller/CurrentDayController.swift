@@ -21,7 +21,7 @@ class CurrentDayController: UIViewController {
     @IBOutlet private var dismissButton:      UIButton!
     
     private let locationManager    = CLLocationManager()
-    private let service            = CurrentWeatherService()
+    private let service            = WeatherService()
     private var isLandscape        = UIDevice.current.orientation.isLandscape
     private var shouldRotate       = false
     private var errorWeatherCities = [String]()
@@ -29,6 +29,7 @@ class CurrentDayController: UIViewController {
     
     private static let weatherKey = "weatherCities"
     private static var weathers   = [CurrentWeatherResponse]()
+    private static var currentWeather: String?
     
     private let weatherBackgroundColors: [UIColor] =
         [UIColor(named: "blue-gradient-end")!,
@@ -37,6 +38,18 @@ class CurrentDayController: UIViewController {
     
     override var shouldAutorotate: Bool {
         return shouldRotate
+    }
+    
+    static func currentWeatherCity() -> String? {
+        return currentWeather
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if !errorPageView.isHidden || pageControl.numberOfPages == 0 {
+            Self.currentWeather = nil
+        } else {
+            Self.currentWeather = Self.weathers[pageControl.currentPage].name + ", " + Self.weathers[pageControl.currentPage].sys.country
+        }
     }
     
     private func forceLoadError() {

@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherService.swift
+//  WeatherService.swift
 //  WeatherApp
 //
 //  Created by KuRaMa on 1/13/21.
@@ -122,6 +122,8 @@ class WeatherService {
             "appid": appid.description,
             "q":     city.description,
         ]
+        
+        components.path = "/data/2.5/forecast"
         
         self.loadForecastWeatherResponse(parameters: parameters, completion: { result in
             switch result {

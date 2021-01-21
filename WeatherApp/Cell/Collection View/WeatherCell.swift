@@ -12,7 +12,7 @@ class WeatherCell: UICollectionViewCell {
     
     @IBOutlet public  var cellContentView:      UIView!
     @IBOutlet private var stackView:            UIStackView!
-    @IBOutlet private var weatherImage:         UIImageView!
+    @IBOutlet private var weatherImageView:         UIImageView!
     @IBOutlet private var cityLabel:            UILabel!
     @IBOutlet private var tempLabel:            UILabel!
     @IBOutlet private var cloudinessValueLabel: UILabel!
@@ -53,13 +53,13 @@ class WeatherCell: UICollectionViewCell {
     }
     
     func setupCurrentWeatherView(weatherResponse: CurrentWeatherResponse) {
-        let celsius = String(format: "%.1f", weatherResponse.main.temp - kelvinOffset)
+        let celsius = String(format: "%.1f°C", weatherResponse.main.temp - kelvinOffset)
         let urlStr  = "https://openweathermap.org/img/w/\(weatherResponse.weather[0].icon).png"
         let speed   = String(format: "%.1f", weatherResponse.wind.speed * meterSpeedToKmeterMultiplier)
         
-        weatherImage.downloadImage(urlString: urlStr)
+        weatherImageView.downloadImage(urlString: urlStr)
         cityLabel.text = weatherResponse.name + ", " + weatherResponse.sys.country
-        tempLabel.text = celsius + "°C | " + weatherResponse.weather[0].main
+        tempLabel.text = celsius + " | " + weatherResponse.weather[0].main
         
         cloudinessValueLabel.text = weatherResponse.clouds.all.description + " %"
         humidityValueLabel.text   = weatherResponse.main.humidity.description + " mm"
