@@ -12,7 +12,7 @@ class WeatherCell: UICollectionViewCell {
     
     @IBOutlet public  var cellContentView:      UIView!
     @IBOutlet private var stackView:            UIStackView!
-    @IBOutlet private var weatherImageView:         UIImageView!
+    @IBOutlet private var weatherImageView:     UIImageView!
     @IBOutlet private var cityLabel:            UILabel!
     @IBOutlet private var tempLabel:            UILabel!
     @IBOutlet private var cloudinessValueLabel: UILabel!
@@ -20,8 +20,6 @@ class WeatherCell: UICollectionViewCell {
     @IBOutlet private var windSpeedValueLabel:  UILabel!
     @IBOutlet private var windDirValueLabel:    UILabel!
     
-    private let meterSpeedToKmeterMultiplier = 3.6
-    private let kelvinOffset = 273.15
     private let cornerRadius = CGFloat(25)
     
     private func speedDegreeToDirection(deg: Double) -> String {
@@ -53,18 +51,17 @@ class WeatherCell: UICollectionViewCell {
     }
     
     func setupCurrentWeatherView(weatherResponse: CurrentWeatherResponse) {
-        let celsius = String(format: "%.1f°C", weatherResponse.main.temp - kelvinOffset)
-        let urlStr  = "https://openweathermap.org/img/w/\(weatherResponse.weather[0].icon).png"
-        let speed   = String(format: "%.1f", weatherResponse.wind.speed * meterSpeedToKmeterMultiplier)
+        let celsius = String(format: "%.1f°C", weatherResponse.main.temperature)
+        let speed   = String(format: "%.1f", weatherResponse.wind.speed)
         
-        weatherImageView.downloadImage(urlString: urlStr)
+        weatherImageView.downloadImage(urlString: weatherResponse.weather[0].iconUrlStr)
         cityLabel.text = weatherResponse.name + ", " + weatherResponse.sys.country
         tempLabel.text = celsius + " | " + weatherResponse.weather[0].main
         
-        cloudinessValueLabel.text = weatherResponse.clouds.all.description + " %"
+        cloudinessValueLabel.text = weatherResponse.clouds.cloudiness.description + " %"
         humidityValueLabel.text   = weatherResponse.main.humidity.description + " mm"
         windSpeedValueLabel.text  = speed + " km/h"
-        windDirValueLabel.text    = speedDegreeToDirection(deg: weatherResponse.wind.deg)
+        windDirValueLabel.text    = speedDegreeToDirection(deg: weatherResponse.wind.degree)
     }
     
     func setOrientation(isLandscapeModeOn: Bool) {

@@ -13,17 +13,14 @@ class ForecastController: UIViewController {
     @IBOutlet private var loader:    UIActivityIndicatorView!
     
     private var weatherNumInFirstDay = 0
-    private let kelvinOffset         = 273.15
     private let service              = WeatherService()
-    private let dateFormatter        = DateFormatter()
+    
     private var weather: ForecastWeatherResponse?
     
     private let weekdays: [String] = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dateFormatter.dateFormat = "yyyy'-'mm'-'dd'"
         
         tableView.dataSource = self
         tableView.delegate   = self
@@ -37,9 +34,9 @@ class ForecastController: UIViewController {
     }
     
     @IBAction func refresh() {
+        tableView.isHidden = true
         guard let city = CurrentDayController.currentWeatherCity() else { return }
         
-        tableView.isHidden = true
         loader.startAnimating()
         service.loadForecastWeatherResponce(city: city) { result in
             DispatchQueue.main.async {
@@ -64,13 +61,10 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let weatherList = weather?.list else { return 0 }
         
-        let firstFullDate = weatherList.first!.dt_txt.split(separator: " ")
-        let firstDate = dateFormatter.date(from: String(firstFullDate[0]))
+        let firstDate = weatherList.first!.date
+        let lastDate  = weatherList.last!.date
         
-        let lastFullDate = weatherList.last!.dt_txt.split(separator: " ")
-        let lastDate = dateFormatter.date(from: String(lastFullDate[0]))
-        
-        let component = Calendar.current.dateComponents([Calendar.Component.day], from: firstDate!, to: lastDate!)
+        let component = Calendar.current.dateComponents([Calendar.Component.day], from: firstDate, to: lastDate)
         return component.day! + 1
     }
     
@@ -79,9 +73,9 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
         
         if section == 0 {
             var count = 0
-            let firstDay = weatherList.first!.dt_txt.split(separator: " ")[0]
+            let firstDay = weatherList.first!.date
             for weather in weatherList {
-                if firstDay == weather.dt_txt.split(separator: " ")[0] {
+                if firstDay == weather.date {
                     count += 1
                 }
             }
@@ -90,9 +84,9 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
             return count
         } else if section == tableView.numberOfSections - 1 {
             var count = 0
-            let lastDay = weatherList.last!.dt_txt.split(separator: " ")[0]
+            let lastDay = weatherList.last!.date
             for weather in weatherList {
-                if lastDay == weather.dt_txt.split(separator: " ")[0] {
+                if lastDay == weather.date {
                     count += 1
                 }
             }
@@ -110,17 +104,11 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
             weatherIndex += weatherNumInFirstDay + 8 * (indexPath.section - 1)
         }
         
-        guard let weather = weather?.list[weatherIndex] else { return cell }
-        
-        if let forecastCell = cell as? ForecastCell {
-            let fullDate = weather.dt_txt.split(separator: " ")
-            let time = String(fullDate[1])
-            let timeWithoutSecond = time[..<time.lastIndex(of: ":")!]
-            
-            forecastCell.timeLabel.text = String(timeWithoutSecond)
-            forecastCell.weatherDescriptionLabel.text = weather.weather[0].description
-            forecastCell.weatherImageView.downloadImage(urlString: "https://openweathermap.org/img/w/\(weather.weather[0].icon).png")
-            forecastCell.temperatureLabel.text = String(format: "%.1f°C", weather.main.temp - kelvinOffset)
+        if let forecastCell = cell as? ForecastCell, let weatherList = weather?.list[weatherIndex] {
+            forecastCell.timeLabel.text = weatherList.time
+            forecastCell.weatherDescriptionLabel.text = weatherList.weather[0].description
+            forecastCell.weatherImageView.downloadImage(urlString: weatherList.weather[0].iconUrlStr)
+            forecastCell.temperatureLabel.text = String(format: "%.1f°C", weatherList.main.temperature)
         }
         
         return cell
@@ -135,13 +123,9 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
         header?.backgroundView = UIView()
         header?.backgroundView?.backgroundColor = UIColor(named: "bg-gradient-end")!
         
-        guard let weatherList = weather?.list else { return header }
-        
-        if let weekdayHeaderView = header as? WeekdayHeaderView {
+        if let weekdayHeaderView = header as? WeekdayHeaderView, let weatherList = weather?.list {
             let weatherIndex = min(8 * section + weatherNumInFirstDay - 1, weatherList.count - 1)
-            let fullDateStr  = weatherList[weatherIndex].dt_txt.split(separator: " ")
-            let date         = dateFormatter.date(from: String(fullDateStr[0]))!
-            let weekday      = Calendar.current.component(.weekday, from: date)
+            let weekday      = Calendar.current.component(.weekday, from: weatherList[weatherIndex].date)
             
             weekdayHeaderView.weekdayLabel.text = weekdays[weekday - 1]
         }

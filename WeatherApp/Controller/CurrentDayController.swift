@@ -212,7 +212,7 @@ class CurrentDayController: UIViewController {
     @IBAction func dismissErrors() {
         var weatherCities = [String]()
         for response in Self.weathers {
-            weatherCities.append(response.name)
+            weatherCities.append(response.name + ", " + response.sys.country)
         }
         
         UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
