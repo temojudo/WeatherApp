@@ -31,11 +31,6 @@ class CurrentDayController: UIViewController {
     private static var weathers   = [CurrentWeatherResponse]()
     private static var currentWeather: String?
     
-    private let weatherBackgroundColors: [UIColor] =
-        [UIColor(named: "blue-gradient-end")!,
-         UIColor(named: "green-gradient-end")!,
-         UIColor(named: "ochre-gradient-end")!]
-    
     override var shouldAutorotate: Bool {
         return shouldRotate
     }
@@ -92,6 +87,12 @@ class CurrentDayController: UIViewController {
         
         setCollectionViewLayout()
         shouldRotate = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        collectionView.reloadData()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -241,6 +242,16 @@ class CurrentDayController: UIViewController {
         }
     }
     
+    @IBAction func openSettings() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let settingsController = mainStoryboard.instantiateViewController(withIdentifier: "SettingsController") as? SettingsController {
+            settingsController.delegate = self
+            settingsController.modalPresentationStyle = .overFullScreen
+            present(settingsController, animated: true, completion: nil)
+        }
+    }
+    
     private func getIndexInWeathers(name: String) -> Int? {
         for i in 0 ..< Self.weathers.count {
             if name == Self.weathers[i].name {
@@ -279,7 +290,7 @@ extension CurrentDayController: UICollectionViewDataSource, UICollectionViewDele
         if let weatherCell = cell as? WeatherCell {
             weatherCell.setOrientation(isLandscapeModeOn: isLandscape)
             weatherCell.setupCurrentWeatherView(weatherResponse: Self.weathers[indexPath.row])
-            weatherCell.cellContentView.backgroundColor = weatherBackgroundColors[indexPath.row % weatherBackgroundColors.count]
+            weatherCell.cellContentView.backgroundColor = Constants.currentWeatherBackgroundColors[indexPath.row % Constants.currentWeatherBackgroundColors.count]
         }
         return cell
     }
@@ -317,6 +328,14 @@ extension CurrentDayController: AddCityDelegate {
             weatherCities.insert(response.name + ", " + response.sys.country, at: pageControl.currentPage)
             UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
         }
+    }
+    
+}
+
+extension CurrentDayController: SettingsDelegate {
+    
+    func settingsChanged(_ sender: SettingsController) {
+        collectionView.reloadData()
     }
     
 }

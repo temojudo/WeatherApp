@@ -17,8 +17,6 @@ class ForecastController: UIViewController {
     
     private var weather: ForecastWeatherResponse?
     
-    private let weekdays: [String] = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +50,24 @@ class ForecastController: UIViewController {
                 self.loader.stopAnimating()
             }
         }
+    }
+    
+    @IBAction func openSettings() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let settingsController = mainStoryboard.instantiateViewController(withIdentifier: "SettingsController") as? SettingsController {
+            settingsController.delegate = self
+            settingsController.modalPresentationStyle = .overFullScreen
+            present(settingsController, animated: true, completion: nil)
+        }
+    }
+    
+}
+
+extension ForecastController: SettingsDelegate {
+    
+    func settingsChanged(_ sender: SettingsController) {
+        tableView.reloadData()
     }
     
 }
@@ -108,7 +124,7 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
             forecastCell.timeLabel.text = weatherList.time
             forecastCell.weatherDescriptionLabel.text = weatherList.weather[0].description
             forecastCell.weatherImageView.downloadImage(urlString: weatherList.weather[0].iconUrlStr)
-            forecastCell.temperatureLabel.text = String(format: "%.1f°C", weatherList.main.temperature)
+            forecastCell.temperatureLabel.text = Constants.getTemperatureString(degree: weatherList.main.temperature)
         }
         
         return cell
@@ -121,13 +137,13 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "WeekdayHeaderView")
         header?.backgroundView = UIView()
-        header?.backgroundView?.backgroundColor = UIColor(named: "bg-gradient-end")!
+        header?.backgroundView?.backgroundColor = Constants.backgroundColor
         
         if let weekdayHeaderView = header as? WeekdayHeaderView, let weatherList = weather?.list {
             let weatherIndex = min(8 * section + weatherNumInFirstDay - 1, weatherList.count - 1)
             let weekday      = Calendar.current.component(.weekday, from: weatherList[weatherIndex].date)
             
-            weekdayHeaderView.weekdayLabel.text = weekdays[weekday - 1]
+            weekdayHeaderView.weekdayLabel.text = Constants.weekdays[weekday - 1]
         }
         
         return header

@@ -103,8 +103,7 @@ struct Temperature: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        let kelvinOffset = 273.15
-        temperature = try container.decode(Double.self, forKey: .temperature) - kelvinOffset
+        temperature = try container.decode(Double.self, forKey: .temperature)
         humidity    = try container.decode(Double.self, forKey: .humitidy)
     }
 }
@@ -121,8 +120,7 @@ struct Wind: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        let meterSpeedToKmeterMultiplier = 3.6
-        speed  = try container.decode(Double.self, forKey: .speed) * meterSpeedToKmeterMultiplier
+        speed  = try container.decode(Double.self, forKey: .speed)
         degree = try container.decode(Double.self, forKey: .degree)
     }
 }

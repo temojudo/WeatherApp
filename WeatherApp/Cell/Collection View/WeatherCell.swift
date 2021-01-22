@@ -20,8 +20,6 @@ class WeatherCell: UICollectionViewCell {
     @IBOutlet private var windSpeedValueLabel:  UILabel!
     @IBOutlet private var windDirValueLabel:    UILabel!
     
-    private let cornerRadius = CGFloat(25)
-    
     private func speedDegreeToDirection(deg: Double) -> String {
         if deg < 22.5 || deg >= 337.5 {
             return "N"
@@ -47,20 +45,20 @@ class WeatherCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        cellContentView.layer.cornerRadius = cornerRadius
+        cellContentView.layer.cornerRadius = 25
     }
     
     func setupCurrentWeatherView(weatherResponse: CurrentWeatherResponse) {
-        let celsius = String(format: "%.1f°C", weatherResponse.main.temperature)
-        let speed   = String(format: "%.1f", weatherResponse.wind.speed)
+        let temperature = Constants.getTemperatureString(degree: weatherResponse.main.temperature)
+        let speed       = Constants.getSpeedString(speed: weatherResponse.wind.speed)
         
         weatherImageView.downloadImage(urlString: weatherResponse.weather[0].iconUrlStr)
         cityLabel.text = weatherResponse.name + ", " + weatherResponse.sys.country
-        tempLabel.text = celsius + " | " + weatherResponse.weather[0].main
+        tempLabel.text = temperature + " | " + weatherResponse.weather[0].main
         
         cloudinessValueLabel.text = weatherResponse.clouds.cloudiness.description + " %"
         humidityValueLabel.text   = weatherResponse.main.humidity.description + " mm"
-        windSpeedValueLabel.text  = speed + " km/h"
+        windSpeedValueLabel.text  = speed
         windDirValueLabel.text    = speedDegreeToDirection(deg: weatherResponse.wind.degree)
     }
     
