@@ -70,6 +70,7 @@ class WeatherService {
                         let result = try decoder.decode(CurrentWeatherResponse.self, from: data)
                         completion(.success(result))
                     } catch {
+                        print(error)
                         completion(.failure(error))
                     }
                 } else {

@@ -22,9 +22,6 @@ class SettingsController: UIViewController {
     @IBOutlet private var fahrenheitImageView: UIImageView!
     @IBOutlet private var kelvinImageView:     UIImageView!
     
-    private let checkedImage   = UIImage(systemName: "checkmark.circle.fill")
-    private let uncheckedImage = UIImage(systemName: "circle")
-    
     private var checkedTemperature = 0
     private var checkedSpeed       = 0
     
@@ -85,49 +82,49 @@ class SettingsController: UIViewController {
     }
     
     @IBAction func kmhClicked() {
-        kmhImageView.image = checkedImage
-        msImageView.image  = uncheckedImage
-        mphImageView.image = uncheckedImage
+        kmhImageView.image = Constants.checkedImage
+        msImageView.image  = Constants.uncheckedImage
+        mphImageView.image = Constants.uncheckedImage
         
         checkedSpeed = Constants.Speed.kmh.rawValue
     }
     
     @IBAction func msClicked() {
-        kmhImageView.image = uncheckedImage
-        msImageView.image  = checkedImage
-        mphImageView.image = uncheckedImage
+        kmhImageView.image = Constants.uncheckedImage
+        msImageView.image  = Constants.checkedImage
+        mphImageView.image = Constants.uncheckedImage
         
         checkedSpeed = Constants.Speed.ms.rawValue
     }
     
     @IBAction func mphClicked() {
-        kmhImageView.image = uncheckedImage
-        msImageView.image  = uncheckedImage
-        mphImageView.image = checkedImage
+        kmhImageView.image = Constants.uncheckedImage
+        msImageView.image  = Constants.uncheckedImage
+        mphImageView.image = Constants.checkedImage
         
         checkedSpeed = Constants.Speed.mph.rawValue
     }
     
     @IBAction func celsiusClicked() {
-        celsiusImageView.image    = checkedImage
-        fahrenheitImageView.image = uncheckedImage
-        kelvinImageView.image     = uncheckedImage
+        celsiusImageView.image    = Constants.checkedImage
+        fahrenheitImageView.image = Constants.uncheckedImage
+        kelvinImageView.image     = Constants.uncheckedImage
         
         checkedTemperature = Constants.Temperature.celsius.rawValue
     }
     
     @IBAction func fahrenheitClicked() {
-        celsiusImageView.image    = uncheckedImage
-        fahrenheitImageView.image = checkedImage
-        kelvinImageView.image     = uncheckedImage
+        celsiusImageView.image    = Constants.uncheckedImage
+        fahrenheitImageView.image = Constants.checkedImage
+        kelvinImageView.image     = Constants.uncheckedImage
         
         checkedTemperature = Constants.Temperature.fahrenheit.rawValue
     }
     
     @IBAction func kelvinClicked() {
-        celsiusImageView.image    = uncheckedImage
-        fahrenheitImageView.image = uncheckedImage
-        kelvinImageView.image     = checkedImage
+        celsiusImageView.image    = Constants.uncheckedImage
+        fahrenheitImageView.image = Constants.uncheckedImage
+        kelvinImageView.image     = Constants.checkedImage
         
         checkedTemperature = Constants.Temperature.kelvin.rawValue
     }

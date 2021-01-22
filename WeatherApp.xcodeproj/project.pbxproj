@@ -25,6 +25,7 @@
 		0C5F413C25ADCFE5003C3BB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C5F413A25ADCFE5003C3BB3 /* LaunchScreen.storyboard */; };
 		0C5F414A25ADD4D6003C3BB3 /* TransparentNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F414925ADD4D6003C3BB3 /* TransparentNavBar.swift */; };
 		0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */; };
+		0CD4E3A225BB66CF006032A6 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E3A125BB66CF006032A6 /* Common.swift */; };
 		0CF35E6A25B5ABFC00922BA1 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF35E6925B5ABFC00922BA1 /* AlertController.swift */; };
 		0CF8B43D25BB280500345638 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B43C25BB280500345638 /* SettingsController.swift */; };
 		0CF8B44225BB494000345638 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B44125BB494000345638 /* Constants.swift */; };
@@ -54,6 +55,7 @@
 		0C5F413D25ADCFE5003C3BB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C5F414925ADD4D6003C3BB3 /* TransparentNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentNavBar.swift; sourceTree = "<group>"; };
 		0C5F414D25ADD574003C3BB3 /* TransparentTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentTabBar.swift; sourceTree = "<group>"; };
+		0CD4E3A125BB66CF006032A6 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		0CF35E6925B5ABFC00922BA1 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		0CF8B43C25BB280500345638 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		0CF8B44125BB494000345638 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -153,7 +155,7 @@
 		0C5F412E25ADCFE4003C3BB3 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				0CF8B44025BB491000345638 /* Constants */,
+				0CF8B44025BB491000345638 /* Common */,
 				0CF9E98A25B0DBDE00609371 /* Extension */,
 				0C0BE2AC25AF018300CCBD8F /* Entity */,
 				0C0BE2A825AF014700CCBD8F /* Service */,
@@ -199,12 +201,13 @@
 			path = "Tab Bar";
 			sourceTree = "<group>";
 		};
-		0CF8B44025BB491000345638 /* Constants */ = {
+		0CF8B44025BB491000345638 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				0CF8B44125BB494000345638 /* Constants.swift */,
+				0CD4E3A125BB66CF006032A6 /* Common.swift */,
 			);
-			path = Constants;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		0CF9E98A25B0DBDE00609371 /* Extension */ = {
@@ -293,6 +296,7 @@
 				0CF8B44225BB494000345638 /* Constants.swift in Sources */,
 				0CF9E98C25B0DC0B00609371 /* UIImageView+Extension.swift in Sources */,
 				0C5F414E25ADD574003C3BB3 /* TransparentTabBar.swift in Sources */,
+				0CD4E3A225BB66CF006032A6 /* Common.swift in Sources */,
 				0C5F413425ADCFE4003C3BB3 /* CurrentDayController.swift in Sources */,
 				0C0C6F8325B98D2E005205C4 /* ForecastController.swift in Sources */,
 				0C0C6F8825B98F2A005205C4 /* ForecastCell.swift in Sources */,

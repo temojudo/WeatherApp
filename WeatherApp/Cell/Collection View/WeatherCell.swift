@@ -19,28 +19,6 @@ class WeatherCell: UICollectionViewCell {
     @IBOutlet private var humidityValueLabel:   UILabel!
     @IBOutlet private var windSpeedValueLabel:  UILabel!
     @IBOutlet private var windDirValueLabel:    UILabel!
-    
-    private func speedDegreeToDirection(deg: Double) -> String {
-        if deg < 22.5 || deg >= 337.5 {
-            return "N"
-        } else if deg >= 22.5 && deg < 67.5 {
-            return "NW"
-        } else if deg >= 67.5 && deg < 112.5 {
-            return "W"
-        } else if deg >= 112.5 && deg < 157.5 {
-            return "SW"
-        } else if deg >= 157.5 && deg < 202.5 {
-            return "S"
-        } else if deg >= 202.5 && deg < 247.5 {
-            return "SE"
-        } else if deg >= 247.5 && deg < 292.5 {
-            return "E"
-        } else if deg >= 292.5 && deg < 337.5 {
-            return "NE"
-        }
-        
-        return "~"
-    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,8 +27,8 @@ class WeatherCell: UICollectionViewCell {
     }
     
     func setupCurrentWeatherView(weatherResponse: CurrentWeatherResponse) {
-        let temperature = Constants.getTemperatureString(degree: weatherResponse.main.temperature)
-        let speed       = Constants.getSpeedString(speed: weatherResponse.wind.speed)
+        let temperature = Common.getTemperatureString(degree: weatherResponse.main.temperature)
+        let speed       = Common.getSpeedString(speed: weatherResponse.wind.speed)
         
         weatherImageView.downloadImage(urlString: weatherResponse.weather[0].iconUrlStr)
         cityLabel.text = weatherResponse.name + ", " + weatherResponse.sys.country
@@ -59,7 +37,7 @@ class WeatherCell: UICollectionViewCell {
         cloudinessValueLabel.text = weatherResponse.clouds.cloudiness.description + " %"
         humidityValueLabel.text   = weatherResponse.main.humidity.description + " mm"
         windSpeedValueLabel.text  = speed
-        windDirValueLabel.text    = speedDegreeToDirection(deg: weatherResponse.wind.degree)
+        windDirValueLabel.text    = Common.speedDegreeToDirection(deg: weatherResponse.wind.degree)
     }
     
     func setOrientation(isLandscapeModeOn: Bool) {

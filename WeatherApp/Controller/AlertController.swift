@@ -21,9 +21,9 @@ class AlertController: UIViewController {
     @IBOutlet private var errorAlertView:        UIView!
     @IBOutlet private var contentView:           UIView!
     
-    weak var delegate: AddCityDelegate?
-    
     private let service = WeatherService()
+    
+    weak var delegate: AddCityDelegate?
     
     override var shouldAutorotate: Bool {
         return false

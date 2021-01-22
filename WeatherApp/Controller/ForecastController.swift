@@ -124,7 +124,7 @@ extension ForecastController: UITableViewDataSource, UITableViewDelegate {
             forecastCell.timeLabel.text = weatherList.time
             forecastCell.weatherDescriptionLabel.text = weatherList.weather[0].description
             forecastCell.weatherImageView.downloadImage(urlString: weatherList.weather[0].iconUrlStr)
-            forecastCell.temperatureLabel.text = Constants.getTemperatureString(degree: weatherList.main.temperature)
+            forecastCell.temperatureLabel.text = Common.getTemperatureString(degree: weatherList.main.temperature)
         }
         
         return cell

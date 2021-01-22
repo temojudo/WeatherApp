@@ -20,15 +20,14 @@ class CurrentDayController: UIViewController {
     @IBOutlet private var reloadButton:       UIButton!
     @IBOutlet private var dismissButton:      UIButton!
     
-    private let locationManager    = CLLocationManager()
     private let service            = WeatherService()
+    private let locationManager    = CLLocationManager()
     private var isLandscape        = UIDevice.current.orientation.isLandscape
     private var shouldRotate       = false
     private var errorWeatherCities = [String]()
     private var group              = DispatchGroup()
     
-    private static let weatherKey = "weatherCities"
-    private static var weathers   = [CurrentWeatherResponse]()
+    private static var weathers    = [CurrentWeatherResponse]()
     private static var currentWeather: String?
     
     override var shouldAutorotate: Bool {
@@ -48,9 +47,9 @@ class CurrentDayController: UIViewController {
     }
     
     private func forceLoadError() {
-        var weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+        var weatherCities = UserDefaults.standard.object(forKey: Constants.weatherKey) as? [String] ?? [String]()
         weatherCities.append("dnsjnasl")
-        UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+        UserDefaults.standard.set(weatherCities, forKey: Constants.weatherKey)
     }
     
     private func setupButtonsCornerRadius() {
@@ -71,8 +70,11 @@ class CurrentDayController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        UserDefaults.standard.set([String](), forKey: Self.weatherKey)
-//        forceLoadError()
+        // uncomment line below to clear weathers
+        // UserDefaults.standard.set([String](), forKey: Constants.weatherKey)
+        
+        // uncomment line below to see error page
+        // forceLoadError()
         
         getInitOrientation()
         setupCollectionView()
@@ -140,9 +142,9 @@ class CurrentDayController: UIViewController {
                     Self.weathers.remove(at: self.pageControl.currentPage)
                     self.collectionView.reloadData()
                     
-                    var weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+                    var weatherCities = UserDefaults.standard.object(forKey: Constants.weatherKey) as? [String] ?? [String]()
                     weatherCities.remove(at: weatherCities.firstIndex(of: cityName)!)
-                    UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+                    UserDefaults.standard.set(weatherCities, forKey: Constants.weatherKey)
                 }
             )
         )
@@ -190,7 +192,7 @@ class CurrentDayController: UIViewController {
         errorWeatherCities.removeAll()
         errorPageView.isHidden = true
         
-        let weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+        let weatherCities = UserDefaults.standard.object(forKey: Constants.weatherKey) as? [String] ?? [String]()
         
         collectionView.isHidden = true
         loader.startAnimating()
@@ -216,7 +218,7 @@ class CurrentDayController: UIViewController {
             weatherCities.append(response.name + ", " + response.sys.country)
         }
         
-        UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+        UserDefaults.standard.set(weatherCities, forKey: Constants.weatherKey)
         refresh()
     }
     
@@ -310,7 +312,7 @@ extension CurrentDayController: UIScrollViewDelegate {
 extension CurrentDayController: AddCityDelegate {
     
     func cityAddedSuccessfully(_ sender: AlertController, response: CurrentWeatherResponse) {
-        var weatherCities = UserDefaults.standard.object(forKey: Self.weatherKey) as? [String] ?? [String]()
+        var weatherCities = UserDefaults.standard.object(forKey: Constants.weatherKey) as? [String] ?? [String]()
         
         if let index = getIndexInWeathers(name: response.name) {
             pageControl.currentPage = index
@@ -326,7 +328,7 @@ extension CurrentDayController: AddCityDelegate {
             })
             
             weatherCities.insert(response.name + ", " + response.sys.country, at: pageControl.currentPage)
-            UserDefaults.standard.set(weatherCities, forKey: Self.weatherKey)
+            UserDefaults.standard.set(weatherCities, forKey: Constants.weatherKey)
         }
     }
     
