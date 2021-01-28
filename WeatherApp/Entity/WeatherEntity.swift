@@ -44,7 +44,7 @@ struct ForecastListItem: Decodable {
         fullDateStr = try container.decode(String.self,      forKey: .fullDateStr)
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy'-'mm'-'dd'"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let dateSplit = fullDateStr.split(separator: " ")
         let dateStr   = String(dateSplit[0])
