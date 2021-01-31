@@ -9,8 +9,9 @@ import UIKit
 
 class ForecastController: UIViewController {
     
-    @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var loader:    UIActivityIndicatorView!
+    @IBOutlet private var tableView:     UITableView!
+    @IBOutlet private var loader:        UIActivityIndicatorView!
+    @IBOutlet private var errorPageView: UIView!
     
     private var weatherNumInFirstDay = 0
     private let service              = WeatherService()
@@ -33,9 +34,18 @@ class ForecastController: UIViewController {
     
     @IBAction func refresh() {
         tableView.isHidden = true
-        guard let city = CurrentDayController.currentWeatherCity() else { return }
-        
         loader.startAnimating()
+        
+        guard let city = CurrentDayController.currentWeatherCity() else {
+            errorPageView.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                self.loader.stopAnimating()
+                self.errorPageView.isHidden = false
+            })
+            return
+        }
+        
+        errorPageView.isHidden = true
         service.loadForecastWeatherResponce(city: city) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -45,11 +55,15 @@ class ForecastController: UIViewController {
                         self.tableView.reloadData()
                         
                     case .failure( _):
-                        break
+                        self.errorPageView.isHidden = false
                 }
                 self.loader.stopAnimating()
             }
         }
+    }
+    
+    @IBAction func dismissErrors() {
+        errorPageView.isHidden = true
     }
     
     @IBAction func openSettings() {
