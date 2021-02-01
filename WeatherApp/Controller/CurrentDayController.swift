@@ -190,22 +190,26 @@ class CurrentDayController: UIViewController {
     @IBAction func refresh() {
         Self.weathers.removeAll()
         errorWeatherCities.removeAll()
-        errorPageView.isHidden = true
-        
-        let weatherCities = UserDefaults.standard.object(forKey: Constants.weatherKey) as? [String] ?? [String]()
-        
-        collectionView.isHidden = true
         loader.startAnimating()
         
+        errorPageView.isHidden      = true
+        collectionView.isHidden     = true
+        pageControl.isHidden        = true
+        addButtonImageView.isHidden = true
+        
+        let weatherCities = UserDefaults.standard.object(forKey: Constants.weatherKey) as? [String] ?? [String]()
         for city in weatherCities {
             loadCurrentWeather(for: city)
         }
         
         group.notify(queue: .main, execute: {
             if self.errorWeatherCities.isEmpty {
-                self.loader.stopAnimating()
-                self.collectionView.isHidden = false
+                self.pageControl.isHidden        = false
+                self.addButtonImageView.isHidden = false
+                self.collectionView.isHidden     = false
+                
                 self.collectionView.reloadData()
+                self.loader.stopAnimating()
             } else {
                 self.errorPageView.isHidden = false
             }
