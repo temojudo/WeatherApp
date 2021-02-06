@@ -29,13 +29,14 @@ class WeatherCell: UICollectionViewCell {
     func setupCurrentWeatherView(weatherResponse: CurrentWeatherResponse) {
         let temperature = Common.getTemperatureString(degree: weatherResponse.main.temperature)
         let speed       = Common.getSpeedString(speed: weatherResponse.wind.speed)
+        let countryName = Locale.current.localizedString(forRegionCode: weatherResponse.sys.country) ?? weatherResponse.sys.country
         
         weatherImageView.downloadImage(urlString: weatherResponse.weather[0].iconUrlStr)
-        cityLabel.text = weatherResponse.name + ", " + weatherResponse.sys.country
-        tempLabel.text = temperature + " | " + weatherResponse.weather[0].main
+        cityLabel.text = weatherResponse.name + Constants.cityCountryDelimiter + countryName
+        tempLabel.text = temperature + Constants.temperatureWeatherDelimiter + weatherResponse.weather[0].main
         
-        cloudinessValueLabel.text = weatherResponse.clouds.cloudiness.description + " %"
-        humidityValueLabel.text   = weatherResponse.main.humidity.description + " mm"
+        cloudinessValueLabel.text = weatherResponse.clouds.cloudiness.description + Constants.cloudinessDimension
+        humidityValueLabel.text   = weatherResponse.main.humidity.description + Constants.humidityDimension
         windSpeedValueLabel.text  = speed
         windDirValueLabel.text    = Common.speedDegreeToDirection(deg: weatherResponse.wind.degree)
     }

@@ -42,7 +42,7 @@ class CurrentDayController: UIViewController {
         if !errorPageView.isHidden || pageControl.numberOfPages == 0 {
             Self.currentWeather = nil
         } else {
-            Self.currentWeather = Self.weathers[pageControl.currentPage].name + ", " + Self.weathers[pageControl.currentPage].sys.country
+            Self.currentWeather = Self.weathers[pageControl.currentPage].name + Constants.cityCountryDelimiter + Self.weathers[pageControl.currentPage].sys.country
         }
     }
     
@@ -123,7 +123,7 @@ class CurrentDayController: UIViewController {
             indexPath.row == pageControl.currentPage
         else { return }
         
-        let cityName = Self.weathers[pageControl.currentPage].name + ", " + Self.weathers[pageControl.currentPage].sys.country
+        let cityName = Self.weathers[pageControl.currentPage].name + Constants.cityCountryDelimiter + Self.weathers[pageControl.currentPage].sys.country
         let alert    = UIAlertController(title: "Delete Weather?", message: "\(cityName) will be deleted", preferredStyle: .alert)
         
         alert.addAction(
@@ -219,7 +219,7 @@ class CurrentDayController: UIViewController {
     @IBAction func dismissErrors() {
         var weatherCities = [String]()
         for response in Self.weathers {
-            weatherCities.append(response.name + ", " + response.sys.country)
+            weatherCities.append(response.name + Constants.cityCountryDelimiter + response.sys.country)
         }
         
         UserDefaults.standard.set(weatherCities, forKey: Constants.weatherKey)
@@ -331,7 +331,7 @@ extension CurrentDayController: AddCityDelegate {
                 self.loader.stopAnimating()
             })
             
-            weatherCities.insert(response.name + ", " + response.sys.country, at: pageControl.currentPage)
+            weatherCities.insert(response.name + Constants.cityCountryDelimiter + response.sys.country, at: pageControl.currentPage)
             UserDefaults.standard.set(weatherCities, forKey: Constants.weatherKey)
         }
     }

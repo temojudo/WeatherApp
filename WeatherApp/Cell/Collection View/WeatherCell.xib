@@ -34,15 +34,15 @@
                                                     <constraint firstAttribute="width" secondItem="WKp-Wf-Kk9" secondAttribute="height" multiplier="1:1" id="Nti-PU-LZI"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 | Mist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zut-OG-DlQ">
-                                                <rect key="frame" x="162.5" y="225" width="75" height="24"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 | Mist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zut-OG-DlQ">
+                                                <rect key="frame" x="6" y="220.5" width="388" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" name="AccentColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tbilisi, Georgia" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQK-Bm-Moo">
-                                                <rect key="frame" x="130" y="194.5" width="140" height="26.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tbilisi, Georgia" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="NQK-Bm-Moo">
+                                                <rect key="frame" x="6" y="192.5" width="388" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -50,11 +50,13 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="WKp-Wf-Kk9" firstAttribute="height" secondItem="EJf-ZK-USi" secondAttribute="height" multiplier="0.35" id="58f-2P-mhc"/>
-                                            <constraint firstItem="NQK-Bm-Moo" firstAttribute="centerX" secondItem="EJf-ZK-USi" secondAttribute="centerX" id="KLT-LP-bL3"/>
                                             <constraint firstItem="Zut-OG-DlQ" firstAttribute="top" secondItem="NQK-Bm-Moo" secondAttribute="bottom" constant="4" id="SEm-xP-ooe"/>
-                                            <constraint firstItem="NQK-Bm-Moo" firstAttribute="top" secondItem="WKp-Wf-Kk9" secondAttribute="bottom" constant="8" id="Tbc-P8-Ani"/>
-                                            <constraint firstItem="Zut-OG-DlQ" firstAttribute="centerX" secondItem="EJf-ZK-USi" secondAttribute="centerX" id="VhF-xp-Egw"/>
+                                            <constraint firstItem="NQK-Bm-Moo" firstAttribute="top" secondItem="WKp-Wf-Kk9" secondAttribute="bottom" constant="6" id="Tbc-P8-Ani"/>
+                                            <constraint firstAttribute="trailing" secondItem="NQK-Bm-Moo" secondAttribute="trailing" constant="6" id="UcW-Q6-Abk"/>
+                                            <constraint firstItem="Zut-OG-DlQ" firstAttribute="leading" secondItem="EJf-ZK-USi" secondAttribute="leading" constant="6" id="fgD-BS-B2W"/>
                                             <constraint firstItem="WKp-Wf-Kk9" firstAttribute="centerY" secondItem="EJf-ZK-USi" secondAttribute="centerY" constant="-16" id="txO-TA-fcL"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zut-OG-DlQ" secondAttribute="trailing" constant="6" id="vmj-Sc-45l"/>
+                                            <constraint firstItem="NQK-Bm-Moo" firstAttribute="leading" secondItem="EJf-ZK-USi" secondAttribute="leading" constant="6" id="xuf-1x-w2m"/>
                                             <constraint firstItem="WKp-Wf-Kk9" firstAttribute="centerX" secondItem="EJf-ZK-USi" secondAttribute="centerX" id="yj6-kH-SF4"/>
                                         </constraints>
                                     </view>
