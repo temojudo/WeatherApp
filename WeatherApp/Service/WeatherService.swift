@@ -27,8 +27,8 @@ class WeatherService {
             let request = URLRequest(url: url)
             
             let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
+                if error != nil {
+                    completion(.failure(ServiceError(msg: "No internet connection")))
                     return
                 }
                 
@@ -38,15 +38,15 @@ class WeatherService {
                         let result = try decoder.decode(ForecastWeatherResponse.self, from: data)
                         completion(.success(result))
                     } catch {
-                        completion(.failure(error))
+                        completion(.failure(ServiceError(msg: "City with that name wasn't found!")))
                     }
                 } else {
-                    completion(.failure(ServiceError.noData))
+                    completion(.failure(ServiceError(msg: "City with that name wasn't found!")))
                 }
             })
             task.resume()
         } else {
-            completion(.failure(ServiceError.invalidParameters))
+            completion(.failure(ServiceError(msg: "Invalid parameters")))
         }
     }
     
@@ -59,8 +59,8 @@ class WeatherService {
             let request = URLRequest(url: url)
             
             let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
+                if error != nil {
+                    completion(.failure(ServiceError(msg: "No internet connection")))
                     return
                 }
                 
@@ -70,16 +70,15 @@ class WeatherService {
                         let result = try decoder.decode(CurrentWeatherResponse.self, from: data)
                         completion(.success(result))
                     } catch {
-                        print(error)
-                        completion(.failure(error))
+                        completion(.failure(ServiceError(msg: "City with that name wasn't found!")))
                     }
                 } else {
-                    completion(.failure(ServiceError.noData))
+                    completion(.failure(ServiceError(msg: "City with that name wasn't found!")))
                 }
             })
             task.resume()
         } else {
-            completion(.failure(ServiceError.invalidParameters))
+            completion(.failure(ServiceError(msg: "Invalid parameters")))
         }
     }
 
@@ -139,7 +138,12 @@ class WeatherService {
     
 }
 
-enum ServiceError: Error {
-    case noData
-    case invalidParameters
+struct ServiceError: Error {
+    let msg: String
+}
+
+extension ServiceError: LocalizedError {
+    public var errorDescription: String? {
+        return NSLocalizedString(msg, comment: "")
+    }
 }

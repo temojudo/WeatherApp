@@ -201,6 +201,7 @@
                         <outlet property="backgroundImageView" destination="0wT-bG-ij3" id="6gO-9V-wOS"/>
                         <outlet property="contentView" destination="ltd-sq-vY1" id="NOS-AH-kzy"/>
                         <outlet property="errorAlertView" destination="hf5-ga-a8C" id="cH5-Lg-wIu"/>
+                        <outlet property="errorDesciptionLabel" destination="fIM-EF-71y" id="ls6-h4-0tH"/>
                         <outlet property="errorStackView" destination="Pws-Su-pVl" id="w0z-Fc-Pls"/>
                         <outlet property="popupView" destination="EhQ-yh-UmZ" id="Qm7-cH-k56"/>
                         <outlet property="submitButtonImageView" destination="LFn-N9-rou" id="pV7-3m-shI"/>
@@ -285,7 +286,7 @@
                             <rect key="frame" x="41.5" y="56" width="331" height="60"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Pws-Su-pVl">
-                                    <rect key="frame" x="12" y="9.5" width="238" height="41"/>
+                                    <rect key="frame" x="12" y="9.5" width="307" height="41"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Occured" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekj-PP-h8c">
                                             <rect key="frame" x="0.0" y="0.0" width="119" height="23"/>
@@ -293,7 +294,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City with that name was not found!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fIM-EF-71y">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City with that name was not found!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="fIM-EF-71y">
                                             <rect key="frame" x="0.0" y="23" width="238" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -304,6 +305,7 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemRedColor"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Pws-Su-pVl" secondAttribute="trailing" constant="12" id="YKH-W1-h7d"/>
                                 <constraint firstItem="Pws-Su-pVl" firstAttribute="centerY" secondItem="hf5-ga-a8C" secondAttribute="centerY" id="jvq-8e-POX"/>
                                 <constraint firstItem="Pws-Su-pVl" firstAttribute="leading" secondItem="hf5-ga-a8C" secondAttribute="leading" constant="12" id="nXo-vX-tpc"/>
                                 <constraint firstAttribute="height" constant="60" id="v36-Jk-ebf"/>

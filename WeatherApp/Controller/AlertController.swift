@@ -19,6 +19,7 @@ class AlertController: UIViewController {
     @IBOutlet private var textField:             UITextField!
     @IBOutlet private var addButtonLoader:       UIActivityIndicatorView!
     @IBOutlet private var errorAlertView:        UIView!
+    @IBOutlet private var errorDesciptionLabel:  UILabel!
     @IBOutlet private var contentView:           UIView!
     @IBOutlet private var errorStackView:        UIView!
     
@@ -126,8 +127,9 @@ class AlertController: UIViewController {
                         self.delegate?.cityAddedSuccessfully(self, response: weatherResponse)
                         self.dismiss(animated: true, completion: nil)
 
-                    case .failure( _):
+                    case .failure(let error):
                         self.textField.text = ""
+                        self.errorDesciptionLabel.text = error.localizedDescription
                         self.errorAlertView.isHidden = false
                 }
             }
