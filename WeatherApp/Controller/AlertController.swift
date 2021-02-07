@@ -20,6 +20,7 @@ class AlertController: UIViewController {
     @IBOutlet private var addButtonLoader:       UIActivityIndicatorView!
     @IBOutlet private var errorAlertView:        UIView!
     @IBOutlet private var contentView:           UIView!
+    @IBOutlet private var errorStackView:        UIView!
     
     private let service = WeatherService()
     
@@ -96,7 +97,7 @@ class AlertController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        if touch?.view != popupView  && touch?.view != errorAlertView {
+        if touch?.view != popupView && touch?.view != errorAlertView && touch?.view != errorStackView {
             dismiss(animated: true, completion: nil)
         } else if touch?.view == popupView && touch?.view != submitButtonImageView && touch?.view != textField {
             textField.resignFirstResponder()

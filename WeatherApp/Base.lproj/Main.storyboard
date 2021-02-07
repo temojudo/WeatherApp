@@ -201,6 +201,7 @@
                         <outlet property="backgroundImageView" destination="0wT-bG-ij3" id="6gO-9V-wOS"/>
                         <outlet property="contentView" destination="ltd-sq-vY1" id="NOS-AH-kzy"/>
                         <outlet property="errorAlertView" destination="hf5-ga-a8C" id="cH5-Lg-wIu"/>
+                        <outlet property="errorStackView" destination="Pws-Su-pVl" id="w0z-Fc-Pls"/>
                         <outlet property="popupView" destination="EhQ-yh-UmZ" id="Qm7-cH-k56"/>
                         <outlet property="submitButtonImageView" destination="LFn-N9-rou" id="pV7-3m-shI"/>
                         <outlet property="textField" destination="7BF-g9-bC0" id="78f-L7-07E"/>
@@ -427,8 +428,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dismissButton" destination="Ilw-Hy-aF6" id="esf-5F-nqd"/>
                         <outlet property="errorPageView" destination="zNb-He-AoJ" id="izO-NP-Q1C"/>
                         <outlet property="loader" destination="e3z-8N-faG" id="t8t-9b-wJV"/>
+                        <outlet property="reloadButton" destination="FMM-EM-sjH" id="jPS-ZZ-Dbh"/>
                         <outlet property="tableView" destination="WQm-5X-i8B" id="mcY-GF-iEE"/>
                     </connections>
                 </viewController>

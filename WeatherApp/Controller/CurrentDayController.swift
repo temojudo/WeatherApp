@@ -26,6 +26,7 @@ class CurrentDayController: UIViewController {
     private var shouldRotate       = false
     private var errorWeatherCities = [String]()
     private var group              = DispatchGroup()
+    private var semaphore          = DispatchSemaphore(value: 1)
     
     private static var weathers    = [CurrentWeatherResponse]()
     private static var currentWeather: String?
@@ -160,6 +161,7 @@ class CurrentDayController: UIViewController {
     private func loadCurrentWeather(for city: String) {
         group.enter()
         service.loadCurrentWeatherResponce(city: city) { result in
+            self.semaphore.wait()
             switch result {
                 case .success(let weatherResponse):
                     Self.weathers.append(weatherResponse)
@@ -167,6 +169,7 @@ class CurrentDayController: UIViewController {
                 case .failure( _):
                     self.errorWeatherCities.append(city)
             }
+            self.semaphore.signal()
             self.group.leave()
         }
     }

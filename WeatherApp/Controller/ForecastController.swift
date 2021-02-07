@@ -12,6 +12,8 @@ class ForecastController: UIViewController {
     @IBOutlet private var tableView:     UITableView!
     @IBOutlet private var loader:        UIActivityIndicatorView!
     @IBOutlet private var errorPageView: UIView!
+    @IBOutlet private var reloadButton:  UIButton!
+    @IBOutlet private var dismissButton: UIButton!
     
     private var weatherNumInFirstDay = 0
     private let service              = WeatherService()
@@ -21,6 +23,15 @@ class ForecastController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTableView()
+        setupButtonsCornerRadius()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        refresh()
+    }
+    
+    private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate   = self
         
@@ -28,8 +39,9 @@ class ForecastController: UIViewController {
         tableView.register(UINib(nibName: "WeekdayHeaderView",   bundle: nil), forHeaderFooterViewReuseIdentifier: "WeekdayHeaderView")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        refresh()
+    private func setupButtonsCornerRadius() {
+        reloadButton.layer.cornerRadius  = 10
+        dismissButton.layer.cornerRadius = 10
     }
     
     @IBAction func refresh() {
